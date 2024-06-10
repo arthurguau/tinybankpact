@@ -1,0 +1,28 @@
+
+//-- # ------------------------------------- from consumer side
+
+//-- # run test to generate pact contracts
+mvn clean test
+
+
+//-- # find pact file in target/pacts
+
+
+//-- # publish contract
+mvn pact:publish
+
+
+//-- # can-i-deploy?
+
+//-- # download pact executable
+curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.4/pact-2.4.4-windows-x86_64.zip
+unzip pact-2.4.4-windows-x86_64.zip
+
+
+//-- # ------------------------------------- from provider side
+
+mvn clean test
+
+
+
+//-- # 
