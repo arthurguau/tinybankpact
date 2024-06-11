@@ -42,7 +42,7 @@ public class OrderApiClientPactTest {
                     o.eachLike("accounts", i -> {
                         i.stringType("type");
                         i.numberType("number");
-                        i.numberType("amount");
+                        //i.numberType("amount");
                     });
                 })).build())
                 .toPact(V4Pact.class);

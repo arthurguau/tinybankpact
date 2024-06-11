@@ -4,7 +4,7 @@ public class Account {
 	
     private String type;
     private int number;
-    private int amount;
+//    private int amount;
 
     public String getType() {
         return type;
@@ -22,11 +22,11 @@ public class Account {
         this.number = number;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+//    public int getAmount() {
+//        return amount;
+//    }
+//
+//    public void setAmount(int amount) {
+//        this.amount = amount;
+//    }
 }
