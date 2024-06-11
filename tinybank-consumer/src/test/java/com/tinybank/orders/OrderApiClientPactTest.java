@@ -26,23 +26,23 @@ public class OrderApiClientPactTest {
 	 * @param builder
 	 * @return
 	 */
-    @Pact(provider = "order_provider", consumer = "order_consumer")
-    public V4Pact listOfOrdersPact(PactDslWithProvider builder) {
+    @Pact(provider = "tinybank-provider", consumer = "tinybank-consumer")
+    public V4Pact listOfAccountsPact(PactDslWithProvider builder) {
     
     	return builder
-                .given("there are orders")
-                .uponReceiving("a request for orders")
-                .path("/orders")
+                .given("there are accounts")
+                .uponReceiving("a request for accounts")
+                .path("/accounts")
                 .method("GET")
                 .willRespondWith()
                 .status(200)
                 .headers(Map.of("Content-Type", "application/json"))
                 .body(newJsonArrayMinLike(1, a -> a.object(o -> {
-                    o.id("id");
-                    o.eachLike("items", i -> {
-                        i.stringType("name");
-                        i.numberType("quantity");
-                        i.numberType("value");
+                    o.id("partyId");
+                    o.eachLike("accounts", i -> {
+                        i.stringType("type");
+                        i.numberType("number");
+                        i.numberType("amount");
                     });
                 })).build())
                 .toPact(V4Pact.class);
@@ -53,13 +53,13 @@ public class OrderApiClientPactTest {
      * @param builder
      * @return
      */
-    @Pact(provider = "order_provider", consumer = "order_consumer")
-    public V4Pact noOrdersPact(PactDslWithProvider builder) {
+    @Pact(provider = "tinybank-provider", consumer = "tinybank-consumer")
+    public V4Pact noAccountsPact(PactDslWithProvider builder) {
         
     	return builder
-                .given("there are no orders")
-                .uponReceiving("a request for orders")
-                .path("/orders")
+                .given("there are no accounts")
+                .uponReceiving("a request for accounts")
+                .path("/accounts")
                 .method("GET")
                 .willRespondWith()
                 .status(200)
@@ -69,26 +69,26 @@ public class OrderApiClientPactTest {
     }
 
     @Test
-    @PactTestFor(pactMethod = "listOfOrdersPact")
-    void getListOfOrders(MockServer mockServer) throws IOException {
+    @PactTestFor(pactMethod = "listOfAccountsPact")
+    void getListOfAccounts(MockServer mockServer) throws IOException {
     	
         var client = new OrderApiClient(mockServer.getUrl());
         var orders = client.fetchOrders();
         
         Assertions.assertNotNull(orders);
         Assertions.assertFalse(orders.isEmpty());
-        Assertions.assertNotNull(orders.get(0).getItems());
-        Assertions.assertFalse(orders.get(0).getItems().isEmpty());
+        Assertions.assertNotNull(orders.get(0).getAccounts());
+        Assertions.assertFalse(orders.get(0).getAccounts().isEmpty());
     }
 
     @Test
-    @PactTestFor(pactMethod = "noOrdersPact")
-    void getEmptyListOfOrders(MockServer mockServer) throws IOException {
+    @PactTestFor(pactMethod = "noAccountsPact")
+    void getEmptyListOfAccounts(MockServer mockServer) throws IOException {
     	
         var client = new OrderApiClient(mockServer.getUrl());
-        var orders = client.fetchOrders();
+        var accounts = client.fetchOrders();
         
-        Assertions.assertNotNull(orders);
-        Assertions.assertTrue(orders.isEmpty());
+        Assertions.assertNotNull(accounts);
+        Assertions.assertTrue(accounts.isEmpty());
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@Provider("order_provider")
+@Provider("tinybank-provider")
 @PactBroker
 public class ContractVerificationTest {
 	
@@ -38,12 +38,12 @@ public class ContractVerificationTest {
         context.verifyInteraction();
     }
 
-    @State("there are orders")
+    @State("there are accounts")
     public void thereAreOrders() throws IOException {
         Mockito.when(ordersRepository.getOrders()).thenReturn(getOrdersFromFile("orders.json"));
     }
 
-    @State("there are no orders")
+    @State("there are no accounts")
     public void thereAreNoOrders() throws IOException {
         Mockito.when(ordersRepository.getOrders()).thenReturn(getOrdersFromFile("no_orders.json"));
     }

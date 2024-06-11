@@ -19,7 +19,7 @@ public class OrdersController {
         this.ordersRepository = ordersRepository;
     }
 
-    @GetMapping("/orders")
+    @GetMapping("/accounts")
     List<Order> getAllOrders() throws IOException {
         return ordersRepository.getOrders();
     }

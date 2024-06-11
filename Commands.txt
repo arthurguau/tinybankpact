@@ -1,5 +1,8 @@
 
-//-- # ------------------------------------- from consumer side
+
+//-- ########################################################### --//
+//-- #    consumer side
+//-- ########################################################### --//
 
 //-- # run test to generate pact contracts
 mvn clean test
@@ -8,21 +11,91 @@ mvn clean test
 //-- # find pact file in target/pacts
 
 
-//-- # publish contract
+//-- ########################################################### --//
+       Publish contract: 
+         01. maven plugin, 
+         02. CLI - executable, or docker image
+         03. API
+//-- ########################################################### --//
+
+//-- # 01. maven plugin
 mvn pact:publish
 
 
+//-- # 02. PACT CLI
+docker run --rm \
+ -w ${PWD} \
+ -v ${PWD}:${PWD} \
+ -e host.docker.internal:9292 \
+  pactfoundation/pact-cli:latest \
+  publish \
+  ${PWD}/build/pacts \
+  --consumer-app-version fake-git-sha-for-demo-$(date +%s) \
+  --tag-with-git-branch
+
+
+//-- ########################################################### --//
 //-- # can-i-deploy?
+//-- ########################################################### --//
 
 //-- # download pact executable
+
+//-- # for MacBook Pro
+curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.4/pact-2.4.4-osx-arm64.tar.gz
+tar xzf pact-2.4.4-osx-arm64.tar.gz
+
+//-- # for Windows
 curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.4/pact-2.4.4-windows-x86_64.zip
 unzip pact-2.4.4-windows-x86_64.zip
 
+//-- # move to PACT CLI bin folder: 
+pact-broker can-i-deploy --pacticipant tinybank-consumer --version '1.0.0-SNAPSHOT' --broker-base-u
+rl=http://localhost:9292 --to=biab
 
-//-- # ------------------------------------- from provider side
 
+//-- ########################################################### --//
+     # deploy - create a deploy tag
+//-- ########################################################### --//
+
+pact-broker create-version-tag --pacticipant tinybank-consumer --version '1.0.0-SNAPSHOT' --broker-base-u
+rl=http://localhost:9292 --tag=biab
+
+
+//-- ########################## End ############################ --//
+
+
+
+
+
+
+
+//-- ########################################################### --//
+//-- #  Provider side
+//-- ########################################################### --//
+
+
+//-- # verify contract expectation, publish verification result
 mvn clean test
 
 
+//-- ########################################################### --//
+//-- # can-i-deploy?
+//-- ########################################################### --//
 
-//-- # 
+//-- # move to PACT CLI bin folder: 
+pact-broker can-i-deploy --pacticipant tinybank-provider --version '0.0.1-SNAPSHOT' --broker-base-u
+rl=http://localhost:9292 --to=biab
+
+
+//-- ########################################################### --//
+     # deploy - create a version tag
+//-- ########################################################### --//
+
+pact-broker create-version-tag --pacticipant tinybank-provider --version '0.0.1-SNAPSHOT' --broker-base-u
+rl=http://localhost:9292 --tag=biab
+
+
+
+//-- # ------------------------------------ Broker CLI
+the official CLI tools that are provided either through a docker file or a standalone executable. 
+As an alternative you can also publish by HTTP requests using the broker API.

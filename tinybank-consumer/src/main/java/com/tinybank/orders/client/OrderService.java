@@ -8,6 +8,6 @@ import com.tinybank.orders.model.Order;
 
 public interface OrderService {
 	
-    @GET("orders")
+    @GET("accounts")
     Call<List<Order>> getOrders();
 }

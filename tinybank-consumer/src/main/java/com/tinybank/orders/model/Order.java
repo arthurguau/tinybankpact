@@ -3,22 +3,22 @@ package com.tinybank.orders.model;
 import java.util.List;
 
 public class Order {
-    private int id;
-    private List<Item> items;
+    private int partyId;
+    private List<Account> accounts;
 
-    public int getId() {
-        return id;
+    public int getPartyId() {
+        return partyId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPartyId(int id) {
+        this.partyId = id;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }

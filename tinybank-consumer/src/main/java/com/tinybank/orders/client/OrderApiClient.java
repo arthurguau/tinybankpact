@@ -11,7 +11,7 @@ import com.tinybank.orders.model.Order;
 
 public class OrderApiClient {
 	
-    private final OrderService orderService;
+    private final OrderService accountService;
 
     public OrderApiClient(String url) {
     	
@@ -20,11 +20,11 @@ public class OrderApiClient {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        orderService = retrofit.create(OrderService.class);
+        accountService = retrofit.create(OrderService.class);
     }
 
     public List<Order> fetchOrders() throws IOException {
-        Response<List<Order>> response = orderService.getOrders().execute();
+        Response<List<Order>> response = accountService.getOrders().execute();
         return response.body();
     }
 }

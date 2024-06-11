@@ -1,26 +1,26 @@
 [
   {
-    "id": 1,
-    "items": [
+    "partyId": 1,
+    "accounts": [
       {
-        "name": "item 1",
-        "quantity": 2,
-        "value": 10
+        "type": "account 1",
+        "number": 2,
+        "amount": 10
       },
       {
-        "name": "item 2",
-        "quantity": 3,
-        "value": 5
+        "type": "account 2",
+        "number": 3,
+        "amount": 5
       }
     ]
   },
   {
-    "id": 2,
-    "items": [
+    "partyId": 2,
+    "accounts": [
       {
-        "name": "item 3",
-        "quantity": 5,
-        "value": 10
+        "type": "account 3",
+        "number": 5,
+        "amount": 10
       }
     ]
   }
